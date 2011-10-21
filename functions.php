@@ -1,51 +1,5 @@
 <?php 
 
-//STOCK WORDPRESS FUNCTION TO ADD MENU FUNCTIONALITY
-add_action( 'init', 'register_my_menus' );
-
-function register_my_menus() {
-	register_nav_menus(
-		array(
-			'main-nav' => __( 'Primary Menu' ),
-			'footer-nav' => __( 'Footer Nav' ),
-		)
-	);
-}
-
-//STOCK WORDPRESS FUNCTION TO ADD THUMBNAIL SUPPORT
-if ( function_exists( 'add_theme_support' ) ) { 
-	add_theme_support( 'post-thumbnails' );
-}
-if ( function_exists( 'add_image_size' ) ) { 
-	add_image_size( 'homepage-slide', 495, 372, true );
-	add_image_size( 'col-box-thumb', 296, 188, true );
-}
-
-//THE FOLLOWING FUNCTION RETURNS THE CONTENT OF A SPECIFIC PAGE LIKE 'FOOTER' OR 'META DESCRIPTION'
-
-function return_page_content_for($pageName, $gmm_html){
-	$moduleContent = get_page_by_title( $pageName );
-	setup_postdata($moduleContent);
-	$rawContent = get_the_content();
-	if ($gmm_html == false) {
-		$contentWithOutHTML = strip_tags ($rawContent);
-		echo $contentWithOutHTML; }
-	if ($gmm_html == true) { the_content(); }
-}
-
-//TEST TO SEE IF PAGE IS CHILD OF ANOTHER PAGE
-function is_tree($pid) {      // $pid = The ID of the page we're looking for pages underneath
-	global $post;         // load details about this page
-	if ( is_page($pid) )
-	return true;            // we're at the page or at a sub page
-	$anc = get_post_ancestors( $post->ID );
-	foreach($anc as $ancestor) {
-		if(is_page() && $ancestor == $pid) {
-			return true;
-		}
-	}
-               return false;  // we're elsewhere
-}
 
 // include css to help style our custom meta boxes
 if (is_admin()) { wp_enqueue_style('custom_meta_css', get_bloginfo('stylesheet_directory') . '/custom_metaboxes/metabox_css.css'); 
